@@ -1,0 +1,70 @@
+body {
+  font-family: 'GFSDidot', 'EB Garamond', Georgia, 'Times New Roman', serif;
+  line-height: 1.55;
+  text-align: justify;
+  margin: 5% 8%;
+  color: #1a1a1a;
+  background-color: #fafafa;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.8em;
+  letter-spacing: 0.08em;
+  margin-top: 2em;
+  margin-bottom: 0.3em;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.3em;
+  letter-spacing: 0.05em;
+  margin-top: 0.3em;
+  margin-bottom: 2em;
+  font-weight: normal;
+  color: #333;
+}
+
+p {
+  text-indent: 1.8em;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+p.first-p {
+  text-indent: 0;
+}
+
+.dropcap {
+  float: left;
+  font-size: 3.4em;
+  line-height: 0.8;
+  margin: 0.1em 0.15em 0 0;
+  font-weight: bold;
+}
+
+.colophon {
+  text-align: center;
+  font-size: 0.9em;
+  line-height: 1.6;
+  margin: 4em auto 3em auto;
+  padding: 1.5em;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  max-width: 80%;
+  color: #444;
+}
+
+.ornament {
+  text-align: center;
+  margin: 3em auto;
+  font-size: 1.1em;
+  letter-spacing: 0.1em;
+  color: #555;
+}
+

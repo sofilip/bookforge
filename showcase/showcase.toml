@@ -1,0 +1,38 @@
+[book]
+title = "De Finibus Bonorum et Malorum"
+author = "Marcus Tullius Cicero"
+translator = "Typeset Showcase Edition"
+language = "en"
+publisher = "BookForge Press"
+year = "2026"
+description = "Lorem Ipsum publisher-grade typesetting showcase generated with BookForge."
+font = "GFS Didot"
+paper = "a5"
+dropcap = true
+section_style = "numeric"
+
+[output]
+dir = "showcase/_build"
+formats = ["pdf"]
+
+[auditor]
+language = "en"
+
+[[parts]]
+num = 1
+name = "Part One"
+title = "The Foundations of Rhetoric"
+start_page = 2
+end_page = 4
+sections = 3
+dropcap_char = "L"
+
+[[parts]]
+num = 2
+name = "Part Two"
+title = "On Order and Proportion"
+start_page = 5
+end_page = 7
+sections = 3
+dropcap_char = "Q"
+

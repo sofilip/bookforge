@@ -1,0 +1,69 @@
+# BookForge Example Configuration
+# =================================
+# This file describes the structure of a book for the BookForge pipeline.
+# Copy and adapt it for your own book project.
+
+[book]
+title = "My Book Title"
+author = "Author Name"
+translator = ""                    # optional
+language = "el"                    # ISO 639-1 code (el, en, fr, de, etc.)
+publisher = "BookForge Edition"
+year = "2026"
+description = "A brief description of the book."
+original_title = ""                # optional, for translated works
+subtitle = ""                      # optional
+
+# Typography
+font = "GFS Didot"                 # any font installed on your system
+paper = "a5"                       # a5, a4, or letter
+dropcap = true                     # decorative drop capital on first paragraph
+
+# Section numbering style: "numeric" (1, 2, 3), "roman" (I, II, III), or "none"
+section_style = "numeric"
+
+# Output settings
+[output]
+dir = "output"                     # where generated files will be saved
+formats = ["pdf", "epub", "txt"]   # any combination of pdf, epub, txt
+
+# Auditor settings (optional)
+[auditor]
+language = "el"                    # language for proofreading rules
+dictionary_path = ""               # path to a Hunspell .dic file (auto-detected if empty)
+# rules_file = "my_rules.json"    # optional custom rules file (advanced)
+
+# Parts / Chapters
+# =================
+# Define each part of the book with its page range in the source PDF.
+# The 'sections' field is the expected number of numbered sections within
+# that part (used for validation).  'dropcap_char' is the first letter
+# of the part for decorative drop capitals.
+
+[[parts]]
+num = 1
+name = "Part One"
+title = "The Beginning"
+start_page = 5
+end_page = 40
+sections = 10
+dropcap_char = "T"
+
+[[parts]]
+num = 2
+name = "Part Two"
+title = "The Middle"
+start_page = 41
+end_page = 100
+sections = 15
+dropcap_char = "A"
+
+[[parts]]
+num = 3
+name = "Part Three"
+title = "The End"
+start_page = 101
+end_page = 150
+sections = 8
+dropcap_char = "I"
+
