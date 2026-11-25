@@ -121,13 +121,18 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv tool install .
 ```
 
-If `bookforge` isn't found after installing, add `uv`'s tool bin directory (`~/.local/bin`) to your `PATH` and restart your shell:
+If `bookforge` isn't found after installing, `~/.local/bin` isn't in your current `PATH`. Add it for your current session and persist it in your shell config:
 
 ```bash
+# apply immediately in the current terminal
 export PATH="$HOME/.local/bin:$PATH"
+
+# persist across new bash sessions (use ~/.zshrc if using zsh)
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
+
+*(You can also run `uv tool update-shell` and open a fresh login shell, or invoke `~/.local/bin/bookforge` directly.)*
 
 Alternatively, you can run it directly from the repository without a global install, or install with `pip` in a virtual environment:
 
