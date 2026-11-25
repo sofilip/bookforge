@@ -124,7 +124,9 @@ uv tool install .
 If `bookforge` isn't found after installing, add `uv`'s tool bin directory (`~/.local/bin`) to your `PATH` and restart your shell:
 
 ```bash
-uv tool update-shell
+export PATH="$HOME/.local/bin:$PATH"
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 Alternatively, you can run it directly from the repository without a global install, or install with `pip` in a virtual environment:
