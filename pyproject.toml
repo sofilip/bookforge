@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Universal automated book publishing pipeline: dual-engine OCR, linguistic second-auditor proofreader, and zero-overflow PDF/EPUB typesetting."
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.15"
 authors = [
     { name = "BookForge Contributors" }
 ]
