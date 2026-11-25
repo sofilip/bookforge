@@ -54,7 +54,7 @@ When you run `bookforge run`, here's the journey your PDF takes:
 
 **2. it extracts text from the PDF**
 
-- Uses PyMuPDF (`fitz`) to pull the embedded text layer page by page.
+- Uses PyMuPDF (`pymupdf`) to pull the embedded text layer page by page.
 - Strips trailing page numbers and single-character scanner artifacts.
 - Rejoins words hyphenated across line breaks and page boundaries using language-aware regex patterns.
 - If the PDF is scanned (no text layer), falls back to parallel Tesseract OCR with checkpoint/resume support.
