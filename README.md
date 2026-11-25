@@ -132,7 +132,7 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-*(You can also run `uv tool update-shell` and open a fresh login shell, or invoke `~/.local/bin/bookforge` directly.)*
+*(You can also run `uv tool update-shell` and open a fresh login shell, or invoke `~/.local/bin/bookforge` directly)*
 
 Alternatively, you can run it directly from the repository without a global install, or install with `pip` in a virtual environment:
 
@@ -184,7 +184,7 @@ If you haven't installed XeLaTeX or Pandoc yet, run just text extraction and aud
 bookforge run --pdf lorem_ipsum.pdf --config showcase/showcase.toml --format txt
 ```
 
-Generated files (`de_finibus_bonorum_et_malorum.pdf`, `.epub`, `.txt`, and `audit_report.md` / `.json`) are written to `showcase/_build/` (configured under `[output]` in `showcase/showcase.toml`). *(Note: `lorem_ipsum.pdf` only contains 4 pages, so a warning about Part 2 having 0 sections is expected with this sample.)*
+Generated files (`de_finibus_bonorum_et_malorum.pdf`, `.epub`, `.txt`, and `audit_report.md` / `.json`) are written to `showcase/_build/` (configured under `[output]` in `showcase/showcase.toml`). *(Note: `lorem_ipsum.pdf` only contains 4 pages, so a warning about Part 2 having 0 sections is expected with this sample)*
 
 ### 2. run it on your own book
 
@@ -195,7 +195,7 @@ Generated files (`de_finibus_bonorum_et_malorum.pdf`, `.epub`, `.txt`, and `audi
    ```
 
 2. **Edit `book.toml`** to match your PDF:
-   - Under `[book]`, fill in `title`, `author`, and `language` (`"el"`, `"en"`, `"fr"`, `"de"`, etc.). Set `font` to any font installed on your system (change `"GFS Didot"` if you didn't install `fonts-gfs-didot`), and choose `section_style` (`"numeric"`, `"roman"`, or `"none"`).
+   - Under `[book]`, fill in `title`, `author`, and `language` (`"el"`, `"en"`, `"fr"`, `"de"`, etc). Set `font` to any font installed on your system (change `"GFS Didot"` if you didn't install `fonts-gfs-didot`), and choose `section_style` (`"numeric"`, `"roman"`, or `"none"`).
    - Under `[output]`, set `dir` (defaults to `output/`).
    - Under `[[parts]]`, define one block per part/chapter using **1-based PDF page numbers** (`start_page` and `end_page` as shown in your PDF viewer, not printed page numbers) and the expected `sections` count.
 
@@ -251,7 +251,7 @@ All of these are free, open-source, and available in every major Linux distribut
 This is a text extraction and typesetting pipeline. It assumes you have a source PDF to work from.
 
 - **the config is manual.** you need to know which pages belong to which part of the book. There's no magic chapter detection — you open the PDF, note down the page ranges, and write them in the config file.
-- **the auditor rules are Greek-focused.** the built-in correction rules target Greek OCR artifacts (chi/kappa confusion, missing accents, etc.). For other languages, you'll need to extend the auditor with your own rules.
+- **the auditor rules are Greek-focused.** the built-in correction rules target Greek OCR artifacts (chi/kappa confusion, missing accents, etc). For other languages, you'll need to extend the auditor with your own rules.
 - **XeLaTeX is required for PDF output.** if you don't have a working TeX installation, the PDF step will fail. You can still generate TXT and EPUB without it.
 - **Pandoc is required for EPUB output.** no Pandoc, no EPUB. You can still generate PDF and TXT.
 - **font availability matters.** the default font is GFS Didot. If it's not installed, XeLaTeX will fall back to whatever it can find, which may not look great.
