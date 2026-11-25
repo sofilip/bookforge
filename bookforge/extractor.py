@@ -14,7 +14,7 @@ import shutil
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
-import fitz  # PyMuPDF
+import pymupdf
 
 
 # ---------------------------------------------------------------------------
@@ -35,7 +35,7 @@ def extract_text_layer(
     [start_page, end_page] (1-based inclusive).
     Returns de-hyphenated, cleaned text.
     """
-    doc = fitz.open(str(pdf_path))
+    doc = pymupdf.open(str(pdf_path))
     pages_text = []
 
     for p_idx in range(start_page - 1, min(end_page, len(doc))):
@@ -150,7 +150,7 @@ def ocr_single_page(
     Returns (page_number_1based, extracted_text).
     """
     try:
-        doc = fitz.open(pdf_path)
+        doc = pymupdf.open(pdf_path)
         page = doc[page_index]
         pix = page.get_pixmap(dpi=dpi)
         img_bytes = pix.tobytes("png")

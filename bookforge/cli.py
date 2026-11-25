@@ -293,9 +293,9 @@ def _cmd_run(args):
         tex_file = outdir / f"{slug}.tex"
         tex_file.write_text(tex_code, encoding="utf-8")
         pdf_path = compile_pdf(tex_file, outdir)
-        import fitz as _fitz
+        import pymupdf
 
-        _doc = _fitz.open(str(pdf_path))
+        _doc = pymupdf.open(str(pdf_path))
         page_count = len(_doc)
         _doc.close()
         print(
@@ -429,4 +429,8 @@ def main():
     else:
         parser.print_help()
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
 

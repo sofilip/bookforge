@@ -11,7 +11,7 @@ import subprocess
 import shutil
 from pathlib import Path
 
-import fitz  # PyMuPDF
+import pymupdf
 
 from .config import BookConfig
 
@@ -185,7 +185,7 @@ def generate_markdown(
 
 def extract_cover(pdf_path: Path, output_path: Path, dpi: int = 200) -> Path:
     """Render the first page of a PDF as a cover image."""
-    doc = fitz.open(str(pdf_path))
+    doc = pymupdf.open(str(pdf_path))
     pix = doc[0].get_pixmap(dpi=dpi)
     pix.save(str(output_path))
     doc.close()
