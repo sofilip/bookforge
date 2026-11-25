@@ -98,41 +98,117 @@ When you run `bookforge run`, here's the journey your PDF takes:
 | `bookforge/epub_builder.py` | Markdown generation and Pandoc EPUB compilation |
 | `bookforge/templates/epub_style.css` | default CSS stylesheet for EPUB readers |
 | `examples/example_config.toml` | sample config file you can copy and adapt |
+| `lorem_ipsum.pdf` | sample 4-page input PDF for quick testing |
 | `showcase/lorem_ipsum_showcase.pdf` | sample typeset output PDF built with lorem ipsum |
-| `showcase/showcase.toml` | config used to generate the showcase PDF |
+| `showcase/showcase.toml` | config used to generate the showcase output |
 | `pyproject.toml` | package metadata and dependencies for uv |
 
 ## installation
 
-It's set up to work with **`uv`**, the python package installer:
+Clone or download the repository and move into the project directory:
 
 ```bash
-# install it as a global tool
+cd bookforge-main
+```
+
+BookForge is set up to work with **[`uv`](https://docs.astral.sh/uv/)**:
+
+```bash
+# install uv if you don't have it yet
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# install bookforge as a global CLI tool
 uv tool install .
 ```
 
-That's it for the tool itself. You'll also need these system dependencies:
-
-- **XeLaTeX** — for PDF compilation. Install with `sudo apt install texlive-xetex texlive-latex-extra texlive-fonts-extra` on Debian/Ubuntu.
-- **Pandoc** — for EPUB generation. Install with `sudo apt install pandoc`.
-- **Tesseract** *(optional)* — only needed for scanned PDFs without a text layer. Install with `sudo apt install tesseract-ocr tesseract-ocr-ell`.
-- **GFS Didot font** *(recommended)* — the default serif font. Install with `sudo apt install fonts-gfs-didot`.
-
-## how to run it
-
-You can run the entire pipeline in a single command:
+If `bookforge` isn't found after installing, add `uv`'s tool bin directory (`~/.local/bin`) to your `PATH` and restart your shell:
 
 ```bash
-# full pipeline: extract, audit, and publish
-bookforge run --pdf mybook.pdf --config book.toml --format pdf,epub,txt
+uv tool update-shell
 ```
 
-If you don't want to run the whole pipeline at once, you can run the individual steps manually:
+Alternatively, you can run it directly from the repository without a global install, or install with `pip` in a virtual environment:
+
+```bash
+# option A: run via uv inside the repo
+uv run bookforge --help
+
+# option B: install with pip
+python3 -m venv .venv
+source .venv/bin/activate
+pip install .
+```
+
+### system dependencies
+
+You'll also need these system packages depending on which output formats you want:
+
+- **XeLaTeX** — required for PDF compilation (`--format pdf`).
+- **Pandoc** — required for EPUB generation (`--format epub`).
+- **GFS Didot font** *(recommended)* — the default serif font in `book.toml`.
+- **Tesseract** *(optional)* — only needed for scanned PDFs without an embedded text layer.
+
+On Debian/Ubuntu:
+
+```bash
+# for PDF and EPUB output with the default font
+sudo apt install texlive-xetex texlive-latex-extra texlive-fonts-extra pandoc fonts-gfs-didot
+
+# optional: only for scanned PDFs (example includes Greek OCR data)
+sudo apt install tesseract-ocr tesseract-ocr-ell
+```
+
+> [!TIP]
+> If you only want plain text (`--format txt`) to test extraction and proofreading first, no system dependencies are needed beyond Python.
+
+## running it for the first time
+
+### 1. quick test with the included sample
+
+The repository includes a sample input PDF (`lorem_ipsum.pdf`) and config (`showcase/showcase.toml`) so you can verify everything works before configuring your own book:
+
+```bash
+bookforge run --pdf lorem_ipsum.pdf --config showcase/showcase.toml --format pdf,epub,txt
+```
+
+If you haven't installed XeLaTeX or Pandoc yet, run just text extraction and auditing:
+
+```bash
+bookforge run --pdf lorem_ipsum.pdf --config showcase/showcase.toml --format txt
+```
+
+Generated files (`de_finibus_bonorum_et_malorum.pdf`, `.epub`, `.txt`, and `audit_report.md` / `.json`) are written to `showcase/_build/` (configured under `[output]` in `showcase/showcase.toml`). *(Note: `lorem_ipsum.pdf` only contains 4 pages, so a warning about Part 2 having 0 sections is expected with this sample.)*
+
+### 2. run it on your own book
+
+1. **Copy the example config** into your working directory:
+
+   ```bash
+   cp examples/example_config.toml book.toml
+   ```
+
+2. **Edit `book.toml`** to match your PDF:
+   - Under `[book]`, fill in `title`, `author`, and `language` (`"el"`, `"en"`, `"fr"`, `"de"`, etc.). Set `font` to any font installed on your system (change `"GFS Didot"` if you didn't install `fonts-gfs-didot`), and choose `section_style` (`"numeric"`, `"roman"`, or `"none"`).
+   - Under `[output]`, set `dir` (defaults to `output/`).
+   - Under `[[parts]]`, define one block per part/chapter using **1-based PDF page numbers** (`start_page` and `end_page` as shown in your PDF viewer, not printed page numbers) and the expected `sections` count.
+
+3. **Run the pipeline:**
+
+   ```bash
+   # full pipeline: extract, audit, and publish
+   bookforge run --pdf path/to/mybook.pdf --config book.toml --format pdf,epub,txt
+   ```
+
+   Pass `--format` with any comma-separated combination of `pdf`, `epub`, and `txt`. All outputs and audit reports are saved to the `dir` specified under `[output]` in `book.toml` (`output/` by default).
+
+### running individual steps
+
+If you want to inspect or edit intermediate text between stages, you can run each step separately:
 
 **1. extract text from the PDF**
 
 ```bash
-bookforge extract --pdf mybook.pdf --config book.toml --output text/
+bookforge extract --pdf path/to/mybook.pdf --config book.toml --output text/
 ```
 
 **2. run the proofreader on extracted text**
@@ -144,17 +220,17 @@ bookforge audit --input text/ --config book.toml --output audited/
 **3. typeset the audited text into final formats**
 
 ```bash
-bookforge publish --input audited/ --config book.toml --format pdf,epub
+bookforge publish --input audited/ --config book.toml --format pdf,epub,txt
 ```
 
 ## system requirements
 
-The tool itself is pure Python with one dependency (`pymupdf`). The heavy lifting is done by system tools:
+The tool itself is pure Python with one package dependency (`pymupdf`). The heavy lifting is done by system tools:
 
+- **Python 3.11+** — required (Python 3.10 also works if `tomli` is installed)
 - **XeLaTeX** (`texlive-xetex`) — required for PDF output
 - **Pandoc** — required for EPUB output
 - **Tesseract** — optional, only for scanned PDFs
-- **Python 3.10+** — required
 
 All of these are free, open-source, and available in every major Linux distribution's package manager.
 
